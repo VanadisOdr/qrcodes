@@ -2,52 +2,61 @@ import csv
 import numpy as np
 import cv2
 import copy
+import pandas as pd
+import os
 
 from pylibdmtx import pylibdmtx
 from csv import DictWriter
 
-image = cv2.imread('test2.png', cv2.IMREAD_UNCHANGED);
+#Выбираем картинку
+image = cv2.imread('order-01.png', cv2.IMREAD_UNCHANGED);
 
+#3 списка
 d = []
 dd = []
+ddd = []
 
-
+#надо
 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-
+#надо
 ret,thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
-
+#сканер ЧЗ
 msg = pylibdmtx.decode(thresh)
 
 
-
+#Перебор найденных ЧЗ и генерация нужного формата для csv [[1],[2]]
 for barcode in msg:
     d.append(barcode.data.decode('utf-8'))
-
-for i in range(len(d)):
-    dd.insert()
-#Генератор списков
-dd = [[] for i in range(len(d))]
-
-n = 2
-m = 1
-a = [[0] * m for i in range(n)]
-print(a)
+#print(d)
+for z in d:
+    #print(z)
+    # Генератор списков с ЧЗ
+    dd = [z for i in range(1)]
+    ddd.append(dd)
+#print(ddd)
 
 
-
+#Создаём заглавние
 with open('chestnii.csv', 'w') as file:
     writer = csv.writer(file)
     writer.writerow(
         ['znak']
     )
-
-for znakss in dd:
+#Заполняем ячейки расшифровкой ЧЗ
+for znakss in ddd:
     with open('chestnii.csv', 'a') as file:
         writer = csv.writer(file)
         writer.writerow(
             znakss
         )
+with open('chestnii.csv', 'r') as file:
+    reader = csv.reader(file)
+    rows = [row for row in reader if any(field.strip() for field in row)]
 
+with open('chestnii2.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerows(rows)
 
+os.remove('chestnii.csv')
 
 

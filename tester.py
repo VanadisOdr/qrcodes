@@ -1,8 +1,4 @@
-n = 2
-m = 1
-a = [[0] * m for i in range(n)]
-print(a)
-
-dd = [[] for i in range(2)]
-
-print(dd)
+my_list = [[1, 2], [3, 4], [5, 6]]
+for inner_list in my_list:
+    for element in inner_list:
+        print(element)
