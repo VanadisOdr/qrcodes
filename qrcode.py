@@ -1,12 +1,9 @@
 import csv
-import numpy as np
 import cv2
-import copy
-import pandas as pd
 import os
 import os.path
 from pylibdmtx import pylibdmtx
-from csv import DictWriter
+
      #Первым делом нужно запускать converver.py в папке pdf#
 #Название вводить без расширения
 my_fold = input('Введите название pdf файла:')
@@ -41,39 +38,18 @@ for i in range(1,pages+1):
     print(my_fold +"-"+ str(i))
 
 
-
-    d = []
-    dd = []
-    ddd = []
-
-
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     ret,thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
-    msg = pylibdmtx.decode(thresh)
-
-
-    #Перебор найденных ЧЗ и генерация нужного формата для csv [[1],[2]]
-    for barcode in msg:
-        d.append(barcode.data.decode('utf-8'))
-    #print(d)
-    for z in d:
-        #print(z)
-        # Генератор списков с ЧЗ
-        dd = [z for i in range(1)]
-        ddd.append(dd)
-    #print(ddd)
-
+    msg = pylibdmtx.decode(thresh, shrink=5,max_count=20, threshold=2, min_edge=20, max_edge=60)
 
 
     #Заполняем ячейки расшифровкой ЧЗ
-    for znakss in ddd:
+    for barcode in msg:
         with open('chestnii.csv', 'a') as file:
             writer = csv.writer(file)
-            writer.writerow(
-                znakss
-            )
+            writer.writerow([barcode.data.decode('utf-8')])
 
 #Создаём новый csv и убираем пропуски
 with open('chestnii.csv', 'r') as file:
@@ -87,6 +63,5 @@ with open('chestnii2.csv', 'w', newline='') as file:
 ##Удаляем старый csv
 os.remove('chestnii.csv')
 #Удаляем png файлы
-os.remove(papka)
-
+#os.remove(papka)
 
