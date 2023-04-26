@@ -4,12 +4,14 @@ import cv2
 import copy
 import pandas as pd
 import os
+import tempfile
 
+from pdf2image import convert_from_path
 from pylibdmtx import pylibdmtx
 from csv import DictWriter
 
 #Выбираем картинку
-image = cv2.imread('order-01.png', cv2.IMREAD_UNCHANGED);
+image = cv2.imread('outputpng/order2-1.png', cv2.IMREAD_UNCHANGED);
 
 #3 списка
 d = []
@@ -49,6 +51,8 @@ for znakss in ddd:
         writer.writerow(
             znakss
         )
+
+#Создаём новый csv и убираем пропуски
 with open('chestnii.csv', 'r') as file:
     reader = csv.reader(file)
     rows = [row for row in reader if any(field.strip() for field in row)]
@@ -57,6 +61,7 @@ with open('chestnii2.csv', 'w', newline='') as file:
     writer = csv.writer(file)
     writer.writerows(rows)
 
+#Удаляем старый csv
 os.remove('chestnii.csv')
 
 

@@ -1,3 +1,8 @@
 # qrcodes
 
-https://github.com/Belval/pdf2image/issues/142 - error solution
+GS1 DataMatrix 
+Folder pdf: converter from pdf to png
+pytest: sandbox
+qrcodes: prod
+
+
