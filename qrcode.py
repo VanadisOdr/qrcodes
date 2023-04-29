@@ -59,7 +59,8 @@ for i in range(1,pages+1):
 
     ret,thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY | cv2.THRESH_OTSU)
 
-    msg = pylibdmtx.decode(thresh, shrink=5,max_count=20, threshold=2, min_edge=20, max_edge=60)
+    msg = pylibdmtx.decode(thresh,timeout=0, shrink=5,max_count=20, threshold=2, min_edge=20, max_edge=60)
+    #pylibdmtx.decode()
 
 
     #Заполняем ячейки расшифровкой ЧЗ
