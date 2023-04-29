@@ -19,9 +19,11 @@ for file in os.listdir():  # цикл поиска файлов
 		put = os.path.abspath(file)  # получаем путь
 		# print('Путь: ', put)
 		print()
-		pages = convert_from_path(put, 400, poppler_path=r'C:\Users\GnedovOO\PycharmProjects\qrcodes\poppler-23.01.0\Library\bin')
+		#Путь меняется в зависимости от расположения
+		pages = convert_from_path(put, 400, poppler_path=r'C:\Users\olegg\PycharmProjects\qrcodes\poppler-23.01.0\Library\bin')
 		if not os.path.isdir(name):
 			os.mkdir(name)
 		for i, page in enumerate(pages):
 			page.save(name + f'/{name}-{i+1}.png')
+
 
