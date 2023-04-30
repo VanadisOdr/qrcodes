@@ -46,6 +46,12 @@ def fcount(path):
     return count
 
 
+#Удаление старого файла
+if 'chestnii2.csv' in os.listdir():
+    os.remove('chestnii2.csv')
+else:
+    print('Файла нет')
+
 
 pages = fcount(papka)
 #Автоперебор страниц
