@@ -50,7 +50,7 @@ def fcount(path):
 if 'chestnii2.csv' in os.listdir():
     os.remove('chestnii2.csv')
 else:
-    print('Файла нет')
+    print('Файла нет, но вы держитесь')
 
 
 pages = fcount(papka)
